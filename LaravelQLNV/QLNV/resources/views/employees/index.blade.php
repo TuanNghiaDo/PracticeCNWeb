@@ -37,14 +37,10 @@
                         <td>{{ $row->name }}</td>
                         <td>{{ $row->birthday }}</td>
                         <td>{{ $row->room->name }}</td>
-                        <td>
-                            <form action="{{ route('employees.destroy', $row->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <a href="{{ route('employees.show', $row->id) }}" class="btn btn-primary btn-sm">Xem chi tiết</a>
-                                <a href="{{ route('employees.edit', $row->id) }}" class="btn btn-warning btn-sm">Sửa</a>
-                                <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
-                            </form>
+                        <td>   
+                            <a href="{{ route('employees.show', $row->id) }}" class="btn btn-primary btn-sm">Xem chi tiết</a>
+                            <a href="{{ route('employees.edit', $row->id) }}" class="btn btn-warning btn-sm">Sửa</a>
+                            <a href="{{ route('employees.confirmDelete', ['id' => $row->id]) }}" class="btn btn-danger btn-sm">Xóa</a>
                         </td>
                     </tr>
                 @endforeach

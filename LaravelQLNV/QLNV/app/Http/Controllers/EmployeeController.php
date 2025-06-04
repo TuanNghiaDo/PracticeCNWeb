@@ -85,9 +85,11 @@ class EmployeeController
         return redirect()->route('employees.index')->with('success', 'Employee updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    public function confirmDelete($id)
+    {
+        $employee = Employee::with('room')->findOrFail($id);
+        return view('employees.confirm_delete', compact('employee'));
+    }
     public function destroy($id)
     {
         $employee = Employee::findOrFail($id);

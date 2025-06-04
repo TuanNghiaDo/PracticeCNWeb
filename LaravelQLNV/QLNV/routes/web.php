@@ -13,3 +13,4 @@ Route::get('/', function () {
 });
 
 Route::resource('employees', EmployeeController::class);
+Route::get('employees/{id}/confirm-delete', [EmployeeController::class, 'confirmDelete'])->name('employees.confirmDelete');
