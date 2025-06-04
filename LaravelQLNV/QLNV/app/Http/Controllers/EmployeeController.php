@@ -12,8 +12,7 @@ class EmployeeController
     public function index()
     {
         return view('employees.index', [
-            'employees' => Employee::all(),
-            'rooms' => Room::all()
+            'employees' => Employee::with('room')->get()
         ]);
     }
 

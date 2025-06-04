@@ -36,7 +36,7 @@
                         <td>{{ $row->id }}</td>
                         <td>{{ $row->name }}</td>
                         <td>{{ $row->birthday }}</td>
-                        <td>{{ $row->roomId }}</td>
+                        <td>{{ $row->room->name }}</td>
                         <td>
                             <form action="{{ route('employees.destroy', $row->id) }}" method="POST">
                                 @csrf
