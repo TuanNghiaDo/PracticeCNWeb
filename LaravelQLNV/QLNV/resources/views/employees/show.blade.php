@@ -29,7 +29,7 @@
                     <b>Phòng</b>
                 </label>
                 <div class="col-sm-10">
-                    {{ $employee->roomId }}
+                    {{ $employee->room->name }}
                 </div>
                 <a href="{{ route('employees.index') }}" class="btn btn-secondary">Quay lại</a>
             </div>

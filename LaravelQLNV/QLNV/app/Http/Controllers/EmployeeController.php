@@ -49,7 +49,7 @@ class EmployeeController
      */
     public function show($id)
     {
-        $employee = Employee::findOrFail($id);
+        $employee = Employee::with('room')->findOrFail($id);
         return view('employees.show', compact('employee'));
     }
 
