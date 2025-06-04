@@ -19,15 +19,30 @@ class EmployeeController
 
     public function create()
     {
-        //
+        $rooms = Room::all();
+        return view('employees.create', [
+            'rooms' => $rooms
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
-        //
+        // Validate the request data
+        $request->validate([
+            'name' => 'required',
+            'birthday' => 'required|date',
+            'roomId' => 'required|exists:rooms,id',
+        ]);
+
+        // Create a new employee
+        Employee::create([
+            'name' => $request->name,
+            'birthday' => $request->birthday,
+            'roomId' => $request->roomId,
+        ]);
+
+        return redirect()->route('employees.index')->with('success', 'Employee created successfully.');
     }
 
     /**
@@ -53,7 +68,7 @@ class EmployeeController
     public function update(Request $request, $id)
     {
         $employee = Employee::findOrFail($id);
-        dd($request->all());
+        //dd($employee);
 
         // Validate the request data
         $request->validate([
@@ -74,8 +89,11 @@ class EmployeeController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Employee $employee)
+    public function destroy($id)
     {
-        //
+        $employee = Employee::findOrFail($id);
+        $employee->delete();
+
+        return redirect()->route('employees.index')->with('success', 'Employee deleted successfully.');
     }
 }

@@ -1,4 +1,4 @@
-@extends('students.master')
+@extends('employees.master')
 @section('content')
 @if($errors->any())
 <div class="alert alert-danger">
@@ -11,41 +11,34 @@
 @endif
 
 <div class="card">
-    <div class="card-header">Thêm sinh viên mới</div>
+    <div class="card-header">Thêm nhân viên mới</div>
     <div class="card-body">
-        <form action="{{ route('students.store') }}" enctype="multipart/form-data" method="POST">
+        <form action="{{ route('employees.store') }}" enctype="multipart/form-data" method="POST">
             @csrf
             <div class="mb-3 row">
-                <label for="StudentName" class="col-label-form col-sm-2">Tên sinh viên</label>
+                <label for="name" class="col-label-form col-sm-2">Tên nhân viên</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="StudentName" name="StudentName"/>
+                    <input type="text" class="form-control" id="name" name="name"/>
                 </div>
             </div>
             <div class="mb-3 row">
-                <label for="StudentName" class="col-label-form col-sm-2">Địa chỉ Email</label>
+                <label for="birthday" class="col-label-form col-sm-2">Ngày sinh</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="StudentEmail" name="StudentEmail"/>
+                    <input type="date" class="form-control" id="birthday" name="birthday"/>
                 </div>
             </div>
             <div class="mb-4 row">
-                <label for="StudentGender" class="col-label-form col-sm-2">Giới tính</label>
+                <label for="roomId" class="col-label-form col-sm-2">Phòng</label>
                 <div class="col-sm-10">
-                    <select name="StudentGender" id="StudentGender" class="form-control">
-                        <option value="1">Nam</option>
-                        <option value="0">Nữ</option>
+                    <select name="roomId" id="roomId" class="form-control">
+                        @foreach($rooms as $room)
+                            <option value="{{ $room->id }}">{{ $room->name }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
-            <div class="mb-3">
-                <label for="ClassRoomID" class="form-label">Chọn lớp</label>
-                <select name="ClassRoomID" id="ClassRoomID" class="form-control">
-                    @foreach($classrooms as $classroom)
-                        <option value="{{ $classroom->ClassroomID }}">{{ $classroom->ClassroomName}}</option>
-                    @endforeach
-                </select>
-            </div>
             <div class="text-center">
-                <a href="{{ route('students.index') }}" class="btn btn-primary">Quay lại</a>
+                <a href="{{ route('employees.index') }}" class="btn btn-primary">Quay lại</a>
                 <input type="submit" class="btn btn-primary" value="Thêm"/>
             </div>
         </form>
