@@ -6,6 +6,11 @@
     {{ $message }}
 </div>
 @endif
+@if ($message = Session::get('error'))
+<div class="alert alert-danger">
+    {{ $message }}
+</div>
+@endif
 
 <div class="container mt-5">
     <h1 class="text-primary mt-3 mb-4 text-center text-uppercase"><b>Quản lí phòng ban</b></h1>

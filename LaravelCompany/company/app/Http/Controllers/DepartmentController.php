@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use Illuminate\Http\Request;
+use App\Models\Employee;
 
 class DepartmentController extends Controller
 {
@@ -12,57 +13,75 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::withCount('hasEmployees')->get(); //Tên hàm quan hệ là hasEmployees
-        dd($departments->first());  // Hiển thị thông tin của các phòng ban cùng với số lượng nhân viên
+        $departments = Department::withCount('hasEmployees')->get();
         return view('departments.index', compact('departments'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
-        //
+        $employees = Employee::all();
+        return view('departments.create', [
+            'employees' => $employees,
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'DepartmentName' => 'required|string|max:255',
+            'DepartmentHeadID' => 'nullable|string',
+        ]);
+
+        Department::create([
+            'DepartmentName' => $request->DepartmentName,
+            'DepartmentHeadID' => $request->DepartmentHeadID,
+        ]);
+
+        return redirect()->route('departments.index')->with('success', 'Department created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(Department $department)
     {
-        //
+        return view('departments.show', compact('department'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(Department $department)
     {
-        //
+        $employees = Employee::all();
+        return view('departments.update', [
+            'department' => $department,
+            'employees' => $employees,
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Department $department)
     {
-        //
+        $request->validate([
+            'DepartmentName' => 'required|string|max:255',
+            'DepartmentHeadID' => 'nullable|string',
+        ]);
+
+        $department->update([
+            'DepartmentName' => $request->DepartmentName,
+            'DepartmentHeadID' => $request->DepartmentHeadID,
+        ]);
+
+        return redirect()->route('departments.index')->with('success', 'Department updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(Department $department)
     {
-        //
+        if ($department->hasEmployees()->count() > 0) {
+            return redirect()->route('departments.index')->with('error', 'Cannot delete department with employees.');
+        }
+
+        $department->delete();
+        return redirect()->route('departments.index')->with('success', 'Department deleted successfully.');
     }
 
     public function confirmDelete($id)
