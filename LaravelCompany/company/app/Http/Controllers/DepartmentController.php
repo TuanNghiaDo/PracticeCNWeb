@@ -8,9 +8,6 @@ use App\Models\Employee;
 
 class DepartmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $departments = Department::withCount('hasEmployees')->get();
