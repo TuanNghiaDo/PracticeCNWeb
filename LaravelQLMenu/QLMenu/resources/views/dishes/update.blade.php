@@ -2,7 +2,7 @@
 @section('content')
     <div class="card">
         <div class="card-header  text-center text-warning text-uppercase fw-bold">
-            Sửa thông tin thuốc
+            Sửa thông tin món ăn
         </div>
         <div class="card-body">
             <form action="{{ route('dishes.update', $dish->dish_id) }}" method="POST">
@@ -15,18 +15,17 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="dish_name" class="col-label-form col-sm-2">Tên mon an</label>
+                    <label for="dish_name" class="col-label-form col-sm-2">Tên món ăn</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="dish_name" name="dish_name" value="{{ $dish->dish_name }}"/>
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="type_id" class="col-label-form col-sm-2">Loại mon an</label>
+                    <label for="type_id" class="col-label-form col-sm-2">Loại món ăn</label>
                     <div class="col-sm-10">
                         <select name="type_id" id="type_id" class="form-select form-control">
-                            <option value="">Chọn loại mon an</option>
                             @foreach($dishTypes as $type)
-                                <option value="{{ $type->type_id }}" @if($type->type_id == $dish->type_id) selected @endif>{{ $type->type_name }}</option>
+                                <option value="{{ $type->type_id }}" @if($dish->type_id == $type->type_id) selected @endif>{{ $type->type_name }}</option>
                             @endforeach
                         </select>
                     </div>

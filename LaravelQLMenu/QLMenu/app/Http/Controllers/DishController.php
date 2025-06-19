@@ -2,32 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Dish;
 use App\Models\DishType;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class DishController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
         $dishes = Dish::all();
         return view('dishes.index', compact('dishes'));
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
         $dishTypes = DishType::all();
-        return view('dishes.create', [
-            'dishTypes' => $dishTypes
-        ]);
+        return view('dishes.create', compact('dishTypes'));
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
         $request->validate([
-            'dish_name' => 'required|unique:dishes',
+            'dish_name' => 'required|unique:dishes,dish_name',
             'type_id' => 'required|exists:dish_types,type_id',
             'des' => 'required',
         ]);
@@ -39,25 +45,29 @@ class DishController extends Controller
         return redirect()->route('dishes.index')->with('success', 'Dish created successfully.');
     }
 
-    public function show(string $id)
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Dish $dish)
     {
-        $room = Dish::findOrFail($id);
-        return view('dishes.show', compact('room'));
+        return view('dishes.show', compact('dish'));
     }
 
-    public function edit($id)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Dish $dish)
     {
-        $dish = Dish::findOrFail($id);
         $dishTypes = DishType::all();
-        return view('dishes.update', [
-            'dish' => $dish,
-            'dishTypes' => $dishTypes,
-        ]);
+        return view('dishes.update', compact('dish', 'dishTypes'));
     }
 
-    public function update(Request $request, $id)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Dish $dish)
     {
-        $dish = Dish::findOrFail($id);
         $request->validate([
             'dish_name' => ['required', Rule::unique('dishes')->ignore($dish->dish_id, 'dish_id')],
             'type_id' => 'required|exists:dish_types,type_id',
@@ -68,19 +78,21 @@ class DishController extends Controller
             'type_id' => $request->type_id,
             'des' => $request->des,
         ]);
-        return redirect()->route('dishes.index')->with('success', 'Dish updated successfully.');
+        return redirect()->route('dishes.index')->with('success', 'Dish created successfully.');
     }
 
-    public function destroy(string $id)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Dish $dish)
     {
-        $room = Dish::findOrFail($id);
-        $room->delete();
+        $dish->delete();
         return redirect()->route('dishes.index')->with('success', 'Dish deleted successfully.');
     }
 
     public function confirmDelete($id)
     {
-        $room = Dish::findOrFail($id);
-        return view('dishes.confirm_delete', compact('room'));
+        $dish = Dish::findOrFail($id);
+        return view('dishes.confirm_delete', compact('dish'));
     }
 }

@@ -1,4 +1,4 @@
-@extends('medicines.master')
+@extends('things.master')
 @section('content')
     <div class="card">
         <div class="card-header">
@@ -7,7 +7,7 @@
                     <b class="text-uppercase fw-bold text-success">Thông tin thuốc chi tiết</b>
                 </div>
                 <div class="col col-md-6">
-                    <a href="{{ route('medicines.index') }}" class="btn btn-primary btn-sm float-end">Xem tất cả danh thuốc</a>
+                    <a href="{{ route('things.index') }}" class="btn btn-primary btn-sm float-end">Xem tất cả danh thuốc</a>
                 </div>
             </div>
         </div>
@@ -16,20 +16,20 @@
                 <label class="col-sm-2 col-label-form">
                     <b>Tên thuốc</b>
                 </label>
-                <div class="col-sm-10">{{ $medicine->medicine_id }}</div>
+                <div class="col-sm-10">{{ $thing->thing_id }}</div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-2 col-label-form">
                     <b>Tác giả</b>
                 </label>
-                <div class="col-sm-10">{{ $medicine->medicine_name }}</div>
+                <div class="col-sm-10">{{ $thing->thing_name }}</div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-2 col-label-form">
                     <b>Loại thuốc</b>
                 </label>
                 <div class="col-sm-10">
-                    {{ $medicine->medicineType->type_name }}
+                    {{ $thing->thingType->type_name }}
                 </div>
             </div>
             <div class="row mb-3">
@@ -37,7 +37,7 @@
                     <b>Ngày sản xuất</b>
                 </label>
                 <div class="col-sm-10">
-                    {{ $medicine->product_date }}
+                    {{ $thing->product_date }}
                 </div>
             </div>
             <div class="row mb-3">
@@ -45,7 +45,7 @@
                     <b>Hạn sử dụng</b>
                 </label>
                 <div class="col-sm-10">
-                    {{ $medicine->expiry_date }}
+                    {{ $thing->expiry_date }}
                 </div>
             </div>
             <div class="row mb-3">
@@ -53,10 +53,10 @@
                     <b>Mô tả</b>
                 </label>
                 <div class="col-sm-10">
-                    {{ $medicine->des }}
+                    {{ $thing->des }}
                 </div>
             </div>
-            <a href="{{ route('medicines.index') }}" class="btn btn-secondary">Quay lại</a>
+            <a href="{{ route('things.index') }}" class="btn btn-secondary">Quay lại</a>
         </div>
     </div>
 @endsection('content')

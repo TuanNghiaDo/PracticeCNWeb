@@ -9,6 +9,7 @@ class Dish extends Model
     protected $table = 'dishes';
     protected $primaryKey = 'dish_id';
     public $timestamps = false;
+
     protected $fillable = [
         'dish_name',
         'type_id',
